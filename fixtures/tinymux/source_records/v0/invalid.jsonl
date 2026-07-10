@@ -1,0 +1,66 @@
+# CASE: malformed_json | malformed_json
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-malformed-json"
+
+# CASE: missing_schema_version | missing_schema_version
+{"event_id":"invalid-missing-schema","timestamp":"2026-07-10T12:10:00Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Missing schema version.","visibility":{"scope":"room"}}
+
+# CASE: unsupported_schema_version | unsupported_schema_version
+{"schema_version":"tinymux.log_event.v9","event_id":"invalid-unsupported-schema","timestamp":"2026-07-10T12:10:05Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Unsupported schema version.","visibility":{"scope":"room"}}
+
+# CASE: missing_event_id | missing_event_id
+{"schema_version":"tinymux.log_event.v0","timestamp":"2026-07-10T12:10:10Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Missing event id.","visibility":{"scope":"room"}}
+
+# CASE: empty_event_id | empty_event_id
+{"schema_version":"tinymux.log_event.v0","event_id":"","timestamp":"2026-07-10T12:10:15Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Empty event id.","visibility":{"scope":"room"}}
+
+# CASE: invalid_source | invalid_source
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-source","timestamp":"2026-07-10T12:10:20Z","source":"other","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Invalid source.","visibility":{"scope":"room"}}
+
+# CASE: missing_world | missing_world
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-missing-world","timestamp":"2026-07-10T12:10:25Z","source":"tinymux","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Missing world.","visibility":{"scope":"room"}}
+
+# CASE: invalid_room_type | invalid_room_type
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-room-type","timestamp":"2026-07-10T12:10:30Z","source":"tinymux","world":"fixture-world","room":"#100","actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Invalid room type.","visibility":{"scope":"room"}}
+
+# CASE: missing_room_identifier | missing_room_identifier
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-missing-room-identifier","timestamp":"2026-07-10T12:10:35Z","source":"tinymux","world":"fixture-world","room":{"name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Missing room identifier.","visibility":{"scope":"room"}}
+
+# CASE: numeric_room_dbref | numeric_room_dbref
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-numeric-room-dbref","timestamp":"2026-07-10T12:10:40Z","source":"tinymux","world":"fixture-world","room":{"dbref":100,"name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Numeric room dbref.","visibility":{"scope":"room"}}
+
+# CASE: missing_actor_identifier | missing_actor_identifier
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-missing-actor-identifier","timestamp":"2026-07-10T12:10:45Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"name":"Fixture Actor"},"event_type":"say","text":"Missing actor identifier.","visibility":{"scope":"room"}}
+
+# CASE: numeric_actor_dbref | numeric_actor_dbref
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-numeric-actor-dbref","timestamp":"2026-07-10T12:10:50Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":200,"name":"Fixture Actor"},"event_type":"say","text":"Numeric actor dbref.","visibility":{"scope":"room"}}
+
+# CASE: null_actor_for_say | null_actor_for_say
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-null-actor-for-say","timestamp":"2026-07-10T12:10:55Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":null,"event_type":"say","text":"Null actor is invalid for say.","visibility":{"scope":"room"}}
+
+# CASE: unsupported_event_type | unsupported_event_type
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-event-type","timestamp":"2026-07-10T12:11:00Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"whisper","text":"Unsupported event type.","visibility":{"scope":"room"}}
+
+# CASE: missing_text | missing_text
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-missing-text","timestamp":"2026-07-10T12:11:05Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","visibility":{"scope":"room"}}
+
+# CASE: non_string_text | non_string_text
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-non-string-text","timestamp":"2026-07-10T12:11:10Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":42,"visibility":{"scope":"room"}}
+
+# CASE: empty_text_for_say | empty_text_for_say
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-empty-text-for-say","timestamp":"2026-07-10T12:11:15Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"","visibility":{"scope":"room"}}
+
+# CASE: missing_visibility | missing_visibility
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-missing-visibility","timestamp":"2026-07-10T12:11:20Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Missing visibility."}
+
+# CASE: invalid_visibility_type | invalid_visibility_type
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-visibility-type","timestamp":"2026-07-10T12:11:25Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Invalid visibility type.","visibility":"room"}
+
+# CASE: unsupported_visibility_scope | unsupported_visibility_scope
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-visibility-scope","timestamp":"2026-07-10T12:11:30Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"Unsupported visibility scope.","visibility":{"scope":"global"}}
+
+# CASE: raw_ansi_text | raw_ansi_text
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-raw-ansi-text","timestamp":"2026-07-10T12:11:35Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"\u001b[31mred fixture text\u001b[0m","visibility":{"scope":"room"}}
+
+# CASE: raw_multiline_framing | raw_multiline_framing
+{"schema_version":"tinymux.log_event.v0","event_id":"invalid-raw-multiline","timestamp":"2026-07-10T12:11:40Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"first physical line
+second physical line","visibility":{"scope":"room"}}
