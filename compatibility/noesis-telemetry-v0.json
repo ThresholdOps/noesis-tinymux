@@ -1,0 +1,7 @@
+{
+  "repository": "ThresholdOps/noesis",
+  "ref": "9d0da9fa94a5538c29dcf74fa57261af8418b14f",
+  "contract": "docs/telemetry-contract.md",
+  "schema_version": "noesis.telemetry.v0",
+  "notes": "First NOESIS main commit including POSE_ATTEMPT and ROOM_EMIT telemetry v0 fixture examples."
+}
