@@ -322,6 +322,12 @@ not be altered silently.
 
 Fixture parity must be maintained during migration.
 
+`compatibility/noesis-telemetry-v0.json` pins the exact `ThresholdOps/noesis`
+commit used as the compatible `noesis.telemetry.v0` contract and fixture
+reference for this mapping document and its fixtures. Updating that reference
+is a deliberate compatibility review step, not an automatic branch-tracking
+operation.
+
 ## Migration Note
 
 This document follows `docs/artifact-ownership.md` and is Phase 2 documentation.
