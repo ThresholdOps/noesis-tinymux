@@ -111,6 +111,7 @@ vocabulary must never grow independently of fixtures that exercise it.
 | Field | Type | Required | Rules |
 | --- | --- | --- | --- |
 | `schema_version` | string | yes | Fixed literal `tinymux.mapping_quarantine.v0`. |
+| `quarantine_id` | string | yes | Non-empty stable identifier of one quarantine record. Unique within the adapter quarantine domain. Must not be synthesized by reusing `source_event_id`. Generation algorithm is not defined by v0. |
 | `quarantine_class` | string | yes | Either `mapping_outcome` or `adapter_error`. |
 | `outcome` | string or null | yes | `UNRESOLVED` or `REJECTED` for `mapping_outcome`; `null` for `adapter_error`. |
 | `rejection_category` | string or null | yes | `null` for `UNRESOLVED` and `adapter_error`; `source_contract` or `mapping_context` for `REJECTED`. |
@@ -125,6 +126,10 @@ vocabulary must never grow independently of fixtures that exercise it.
 | `diagnostic_details` | string or object | yes | Non-empty diagnostic information for every record, including `adapter_error`. This is where adapter exception or failure details belong. |
 | `content_hash` | string or null | no | Optional integrity aid. It must never substitute for `source_record` or `source_record_raw`. |
 
+`quarantine_id` identifies the quarantine record, not the TinyMUX source event.
+The same source record may produce separate quarantine records during separate
+processing attempts, so `source_event_id` is not a quarantine-record identifier.
+
 `mapping_context`, when present, preserves adapter-owned context fields as
 observed:
 
@@ -133,6 +138,12 @@ observed:
 - `mapping_version`, when present, records the requested mapping version.
 
 The quarantine record must not synthesize `mapping_context`, `run_id`, or `seq`.
+
+`adapter_processing_timestamp` is the record-creation time for the quarantine
+record. It is the v0 equivalent of a generic recorded-at timestamp. It must
+remain distinct from the source event timestamp because source time is evidence
+from the TinyMUX-side record, while adapter processing time is evidence about
+the adapter's handling of that record.
 
 If `content_hash` is included, the hashing input is the exact
 `source_record_raw` string when `source_record_raw` is non-null. Otherwise the
@@ -168,6 +179,11 @@ If the quarantine write itself fails, that failure must be surfaced explicitly.
 It must not be swallowed, downgraded to success, or treated as a completed
 processing attempt.
 
+A failure to persist a quarantine record is not represented by another
+`tinymux.mapping_quarantine.v0` record in the same required sink. It must be
+surfaced through an explicit external failure signal and must not be treated as
+successful processing.
+
 ## Retention and Integrity
 
 Source content is mandatory. Exactly one of `source_record` or
@@ -201,8 +217,8 @@ contracts.
 ## Worked Examples
 
 The first three examples are derived from committed mapping fixture cases. The
-fourth example is illustrative because adapter-internal errors do not yet have
-fixture precedent.
+raw-input and adapter-error examples are illustrative because they do not yet
+have mapping fixture precedent.
 
 ### `mapping_outcome` / `UNRESOLVED`
 
@@ -211,7 +227,7 @@ Derived from
 `tinymux-to-noesis-v0-page-unresolved`.
 
 ```json
-{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_class":"mapping_outcome","outcome":"UNRESOLVED","rejection_category":null,"reason_code":"no_private_communication_event_type","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-page-0001","timestamp":"2026-07-10T12:00:25Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"target":{"dbref":"#300","name":"Fixture Target"},"event_type":"page","text":"This is a synthetic private page.","visibility":{"scope":"private","audience":["#200","#300"],"realm":null},"channel":"page","raw":{"verb":"page","mapping_status":"unresolved"}},"source_record_raw":null,"source_event_id":"source-fixture-page-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":6},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:00:25.100Z","diagnostic_details":"Valid page source record, but telemetry v0 has no PAGE_ATTEMPT or private communication event family.","content_hash":null}
+{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_id":"quarantine-fixture-0001","quarantine_class":"mapping_outcome","outcome":"UNRESOLVED","rejection_category":null,"reason_code":"no_private_communication_event_type","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-page-0001","timestamp":"2026-07-10T12:00:25Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"target":{"dbref":"#300","name":"Fixture Target"},"event_type":"page","text":"This is a synthetic private page.","visibility":{"scope":"private","audience":["#200","#300"],"realm":null},"channel":"page","raw":{"verb":"page","mapping_status":"unresolved"}},"source_record_raw":null,"source_event_id":"source-fixture-page-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":6},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:00:25.100Z","diagnostic_details":"Valid page source record, but telemetry v0 has no PAGE_ATTEMPT or private communication event family.","content_hash":null}
 ```
 
 ### `mapping_outcome` / `REJECTED` / `source_contract`
@@ -220,7 +236,7 @@ Derived from `fixtures/mapping/tinymux_to_noesis/v0/rejected.json` case
 `tinymux-to-noesis-v0-invalid-source-record-rejected`.
 
 ```json
-{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_class":"mapping_outcome","outcome":"REJECTED","rejection_category":"source_contract","reason_code":"invalid_source_record","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-rejected-invalid-0001","timestamp":"2026-07-10T12:01:05Z","source":"tinymux","world":"fixture-world","room":{"dbref":100,"name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This record has a numeric room dbref.","visibility":{"scope":"room","audience":["#100"],"realm":null}},"source_record_raw":null,"source_event_id":"source-fixture-rejected-invalid-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":11},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:01:05.100Z","diagnostic_details":"Source record rejected by tinymux.log_event.v0 validation: numeric room dbref.","content_hash":null}
+{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_id":"quarantine-fixture-0002","quarantine_class":"mapping_outcome","outcome":"REJECTED","rejection_category":"source_contract","reason_code":"invalid_source_record","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-rejected-invalid-0001","timestamp":"2026-07-10T12:01:05Z","source":"tinymux","world":"fixture-world","room":{"dbref":100,"name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This record has a numeric room dbref.","visibility":{"scope":"room","audience":["#100"],"realm":null}},"source_record_raw":null,"source_event_id":"source-fixture-rejected-invalid-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":11},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:01:05.100Z","diagnostic_details":"Source record rejected by tinymux.log_event.v0 validation: numeric room dbref.","content_hash":null}
 ```
 
 ### `mapping_outcome` / `REJECTED` / `mapping_context`
@@ -229,7 +245,17 @@ Derived from `fixtures/mapping/tinymux_to_noesis/v0/rejected.json` case
 `tinymux-to-noesis-v0-missing-mapping-context-rejected`.
 
 ```json
-{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_class":"mapping_outcome","outcome":"REJECTED","rejection_category":"mapping_context","reason_code":"missing_mapping_context","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-rejected-missing-context-0001","timestamp":"2026-07-10T12:01:15Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This record lacks adapter mapping context.","visibility":{"scope":"room","audience":["#100"],"realm":null}},"source_record_raw":null,"source_event_id":"source-fixture-rejected-missing-context-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:01:15.100Z","diagnostic_details":"A valid source record could not produce telemetry because adapter mapping context was absent.","content_hash":null}
+{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_id":"quarantine-fixture-0003","quarantine_class":"mapping_outcome","outcome":"REJECTED","rejection_category":"mapping_context","reason_code":"missing_mapping_context","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-rejected-missing-context-0001","timestamp":"2026-07-10T12:01:15Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This record lacks adapter mapping context.","visibility":{"scope":"room","audience":["#100"],"realm":null}},"source_record_raw":null,"source_event_id":"source-fixture-rejected-missing-context-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:01:15.100Z","diagnostic_details":"A valid source record could not produce telemetry because adapter mapping context was absent.","content_hash":null}
+```
+
+### Raw Input / Unparseable Source Record
+
+Illustrative only. This example is not derived from a current mapping fixture.
+It shows the fallback shape when the input accepted for processing could not be
+parsed as JSON at all.
+
+```json
+{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_id":"quarantine-fixture-0004","quarantine_class":"mapping_outcome","outcome":"REJECTED","rejection_category":"source_contract","reason_code":"invalid_source_record","source_record":null,"source_record_raw":"{\"schema_version\":\"tinymux.log_event.v0\",\"event_id\":\"source-fixture-malformed-0001\",\"text\":\"unterminated synthetic input\"","source_event_id":null,"source_schema_version":null,"mapping_context":{"run_id":"fixture-run-0001","seq":12},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:01:25.100Z","diagnostic_details":"Synthetic source input could not be parsed as one complete JSON object.","content_hash":null}
 ```
 
 ### `adapter_error`
@@ -237,7 +263,7 @@ Derived from `fixtures/mapping/tinymux_to_noesis/v0/rejected.json` case
 Illustrative only. This example is not derived from a current fixture.
 
 ```json
-{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_class":"adapter_error","outcome":null,"rejection_category":null,"reason_code":"adapter_error","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-say-0001","timestamp":"2026-07-10T12:00:00Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This is a synthetic room speech event.","visibility":{"scope":"room","audience":["#100"],"realm":null},"raw":{"verb":"say"}},"source_record_raw":null,"source_event_id":"source-fixture-say-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":1},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:00:00.100Z","diagnostic_details":{"error_type":"QuarantineWriteError","message":"Illustrative failure while writing quarantine output for a processing attempt."},"content_hash":null}
+{"schema_version":"tinymux.mapping_quarantine.v0","quarantine_id":"quarantine-fixture-0005","quarantine_class":"adapter_error","outcome":null,"rejection_category":null,"reason_code":"adapter_error","source_record":{"schema_version":"tinymux.log_event.v0","event_id":"source-fixture-say-0001","timestamp":"2026-07-10T12:00:00Z","source":"tinymux","world":"fixture-world","room":{"dbref":"#100","name":"Fixture Room"},"actor":{"dbref":"#200","name":"Fixture Actor"},"event_type":"say","text":"This is a synthetic room speech event.","visibility":{"scope":"room","audience":["#100"],"realm":null},"raw":{"verb":"say"}},"source_record_raw":null,"source_event_id":"source-fixture-say-0001","source_schema_version":"tinymux.log_event.v0","mapping_context":{"run_id":"fixture-run-0001","seq":1},"mapping_contract_version":"tinymux-to-noesis-telemetry-mapping-v0","adapter_processing_timestamp":"2026-07-10T12:00:00.100Z","diagnostic_details":{"error_type":"AdapterProcessingError","message":"Illustrative unexpected adapter failure before mapping classification completed."},"content_hash":null}
 ```
 
 ## Open Questions
