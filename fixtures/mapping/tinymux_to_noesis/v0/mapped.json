@@ -1,0 +1,439 @@
+[
+  {
+    "case_id": "tinymux-to-noesis-v0-say-mapped",
+    "outcome": "MAPPED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-say-0001",
+      "timestamp": "2026-07-10T12:00:00Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This is a synthetic room speech event.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "raw": {
+        "verb": "say"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 1
+    },
+    "expected_telemetry": {
+      "schema_version": "noesis.telemetry.v0",
+      "event_id": "telemetry-fixture-say-0001",
+      "ts_utc": "2026-07-10T12:00:00Z",
+      "run_id": "fixture-run-0001",
+      "seq": 1,
+      "event_type": "SAY_ATTEMPT",
+      "event_phase": "attempt",
+      "producer": {
+        "kind": "mux_emitter",
+        "source": "tinymux",
+        "authoritative": true
+      },
+      "actor": {
+        "dbref": "#200",
+        "name_raw": "Fixture Actor"
+      },
+      "location": {
+        "dbref": "#100",
+        "name_raw": "Fixture Room"
+      },
+      "raw": {
+        "command_raw": null,
+        "content_raw": "This is a synthetic room speech event.",
+        "verb_raw": "say",
+        "from_dbref": null,
+        "to_dbref": null,
+        "realm_tx_raw": {
+          "schema_version": "tinymux.log_event.v0",
+          "event_id": "source-fixture-say-0001",
+          "world": "fixture-world",
+          "raw": {
+            "verb": "say"
+          }
+        },
+        "realm_rx_raw": null,
+        "realm_context_raw": "fixture-world",
+        "perception_context_raw": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "target_raw": null,
+        "error_raw": null
+      }
+    },
+    "expected_reason": null,
+    "notes": "Maps room speech to SAY_ATTEMPT and preserves source visibility as raw evidence."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-pose-mapped",
+    "outcome": "MAPPED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-pose-0001",
+      "timestamp": "2026-07-10T12:00:05Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "pose",
+      "text": "Fixture Actor checks the synthetic marker.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "raw": {
+        "verb": "pose"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 2
+    },
+    "expected_telemetry": {
+      "schema_version": "noesis.telemetry.v0",
+      "event_id": "telemetry-fixture-pose-0001",
+      "ts_utc": "2026-07-10T12:00:05Z",
+      "run_id": "fixture-run-0001",
+      "seq": 2,
+      "event_type": "POSE_ATTEMPT",
+      "event_phase": "attempt",
+      "producer": {
+        "kind": "mux_emitter",
+        "source": "tinymux",
+        "authoritative": true
+      },
+      "actor": {
+        "dbref": "#200",
+        "name_raw": "Fixture Actor"
+      },
+      "location": {
+        "dbref": "#100",
+        "name_raw": "Fixture Room"
+      },
+      "raw": {
+        "command_raw": null,
+        "content_raw": "Fixture Actor checks the synthetic marker.",
+        "verb_raw": "pose",
+        "from_dbref": null,
+        "to_dbref": null,
+        "realm_tx_raw": {
+          "schema_version": "tinymux.log_event.v0",
+          "event_id": "source-fixture-pose-0001",
+          "world": "fixture-world",
+          "raw": {
+            "verb": "pose"
+          }
+        },
+        "realm_rx_raw": null,
+        "realm_context_raw": "fixture-world",
+        "perception_context_raw": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "target_raw": null,
+        "error_raw": null
+      }
+    },
+    "expected_reason": null,
+    "notes": "Maps pose/action text to POSE_ATTEMPT without rewriting content."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-emit-mapped",
+    "outcome": "MAPPED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-emit-0001",
+      "timestamp": "2026-07-10T12:00:10Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#201",
+        "name": "Fixture Relay"
+      },
+      "event_type": "emit",
+      "text": "A synthetic room notice is emitted.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "softcode": {
+        "relay": "FixtureRelay",
+        "rule": "emit"
+      },
+      "raw": {
+        "verb": "emit"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 3
+    },
+    "expected_telemetry": {
+      "schema_version": "noesis.telemetry.v0",
+      "event_id": "telemetry-fixture-emit-0001",
+      "ts_utc": "2026-07-10T12:00:10Z",
+      "run_id": "fixture-run-0001",
+      "seq": 3,
+      "event_type": "ROOM_EMIT",
+      "event_phase": "emit",
+      "producer": {
+        "kind": "mux_emitter",
+        "source": "tinymux",
+        "authoritative": true
+      },
+      "actor": {
+        "dbref": "#201",
+        "name_raw": "Fixture Relay"
+      },
+      "location": {
+        "dbref": "#100",
+        "name_raw": "Fixture Room"
+      },
+      "raw": {
+        "command_raw": null,
+        "content_raw": "A synthetic room notice is emitted.",
+        "verb_raw": "emit",
+        "from_dbref": null,
+        "to_dbref": null,
+        "realm_tx_raw": {
+          "schema_version": "tinymux.log_event.v0",
+          "event_id": "source-fixture-emit-0001",
+          "world": "fixture-world",
+          "softcode": {
+            "relay": "FixtureRelay",
+            "rule": "emit"
+          },
+          "raw": {
+            "verb": "emit"
+          }
+        },
+        "realm_rx_raw": null,
+        "realm_context_raw": "fixture-world",
+        "perception_context_raw": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "target_raw": null,
+        "error_raw": null
+      }
+    },
+    "expected_reason": null,
+    "notes": "Maps explicit room emit classification to ROOM_EMIT."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-enter-mapped",
+    "outcome": "MAPPED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-enter-0001",
+      "timestamp": "2026-07-10T12:00:15Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "enter",
+      "text": "",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "raw": {
+        "from_room": "#101",
+        "verb": "enter"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 4
+    },
+    "expected_telemetry": {
+      "schema_version": "noesis.telemetry.v0",
+      "event_id": "telemetry-fixture-enter-0001",
+      "ts_utc": "2026-07-10T12:00:15Z",
+      "run_id": "fixture-run-0001",
+      "seq": 4,
+      "event_type": "MOVE_ATTEMPT",
+      "event_phase": "attempt",
+      "producer": {
+        "kind": "mux_emitter",
+        "source": "tinymux",
+        "authoritative": true
+      },
+      "actor": {
+        "dbref": "#200",
+        "name_raw": "Fixture Actor"
+      },
+      "location": {
+        "dbref": "#100",
+        "name_raw": "Fixture Room"
+      },
+      "raw": {
+        "command_raw": null,
+        "content_raw": "",
+        "verb_raw": "enter",
+        "from_dbref": "#101",
+        "to_dbref": "#100",
+        "realm_tx_raw": {
+          "schema_version": "tinymux.log_event.v0",
+          "event_id": "source-fixture-enter-0001",
+          "world": "fixture-world",
+          "raw": {
+            "from_room": "#101",
+            "verb": "enter"
+          }
+        },
+        "realm_rx_raw": null,
+        "realm_context_raw": "fixture-world",
+        "perception_context_raw": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "target_raw": null,
+        "error_raw": null
+      }
+    },
+    "expected_reason": null,
+    "notes": "Maps enter to MOVE_ATTEMPT; source room is the observed current location and raw.from_room is preserved as origin evidence."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-leave-mapped",
+    "outcome": "MAPPED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-leave-0001",
+      "timestamp": "2026-07-10T12:00:20Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "leave",
+      "text": "",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "raw": {
+        "to_room": "#102",
+        "verb": "leave"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 5
+    },
+    "expected_telemetry": {
+      "schema_version": "noesis.telemetry.v0",
+      "event_id": "telemetry-fixture-leave-0001",
+      "ts_utc": "2026-07-10T12:00:20Z",
+      "run_id": "fixture-run-0001",
+      "seq": 5,
+      "event_type": "MOVE_ATTEMPT",
+      "event_phase": "attempt",
+      "producer": {
+        "kind": "mux_emitter",
+        "source": "tinymux",
+        "authoritative": true
+      },
+      "actor": {
+        "dbref": "#200",
+        "name_raw": "Fixture Actor"
+      },
+      "location": {
+        "dbref": "#100",
+        "name_raw": "Fixture Room"
+      },
+      "raw": {
+        "command_raw": null,
+        "content_raw": "",
+        "verb_raw": "leave",
+        "from_dbref": "#100",
+        "to_dbref": "#102",
+        "realm_tx_raw": {
+          "schema_version": "tinymux.log_event.v0",
+          "event_id": "source-fixture-leave-0001",
+          "world": "fixture-world",
+          "raw": {
+            "to_room": "#102",
+            "verb": "leave"
+          }
+        },
+        "realm_rx_raw": null,
+        "realm_context_raw": "fixture-world",
+        "perception_context_raw": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "target_raw": null,
+        "error_raw": null
+      }
+    },
+    "expected_reason": null,
+    "notes": "Maps leave to MOVE_ATTEMPT; source room is the observed current location and raw.to_room is preserved as destination evidence."
+  }
+]

@@ -1,0 +1,158 @@
+[
+  {
+    "case_id": "tinymux-to-noesis-v0-page-unresolved",
+    "outcome": "UNRESOLVED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-page-0001",
+      "timestamp": "2026-07-10T12:00:25Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "target": {
+        "dbref": "#300",
+        "name": "Fixture Target"
+      },
+      "event_type": "page",
+      "text": "This is a synthetic private page.",
+      "visibility": {
+        "scope": "private",
+        "audience": [
+          "#200",
+          "#300"
+        ],
+        "realm": null
+      },
+      "channel": "page",
+      "raw": {
+        "verb": "page",
+        "mapping_status": "unresolved"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 6
+    },
+    "expected_telemetry": null,
+    "expected_reason": "no_private_communication_event_type",
+    "notes": "Valid page source record, but telemetry v0 has no PAGE_ATTEMPT or private communication event family."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-ooc-unresolved",
+    "outcome": "UNRESOLVED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-ooc-0001",
+      "timestamp": "2026-07-10T12:00:30Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "ooc",
+      "text": "This is synthetic out-of-character text.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      },
+      "channel": "ooc"
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 7
+    },
+    "expected_telemetry": null,
+    "expected_reason": "no_ooc_event_type",
+    "notes": "Valid OOC source record, but telemetry v0 has no OOC_ATTEMPT and it must not be silently treated as ROOM_EMIT."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-system-unresolved",
+    "outcome": "UNRESOLVED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-system-0001",
+      "timestamp": "2026-07-10T12:00:35Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": null,
+      "event_type": "system",
+      "text": "synthetic relay checkpoint",
+      "visibility": {
+        "scope": "system",
+        "audience": [
+          "fixture-operators"
+        ],
+        "realm": null
+      },
+      "raw": {
+        "kind": "checkpoint",
+        "relay": "FixtureRelay"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 8
+    },
+    "expected_telemetry": null,
+    "expected_reason": "system_subtype_required",
+    "notes": "Valid system source record, but no explicit subtype determines ROOM_EMIT, ERROR, or REFUSAL."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-custom-unresolved",
+    "outcome": "UNRESOLVED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-custom-0001",
+      "timestamp": "2026-07-10T12:00:40Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": null,
+      "event_type": "custom",
+      "text": "",
+      "visibility": {
+        "scope": "custom",
+        "audience": [
+          "fixture-observer"
+        ],
+        "realm": null
+      },
+      "softcode": {
+        "relay": "FixtureRelay",
+        "rule": "custom.synthetic"
+      },
+      "raw": {
+        "subtype": "fixture.custom.synthetic"
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 9
+    },
+    "expected_telemetry": null,
+    "expected_reason": "custom_subtype_required",
+    "notes": "Valid custom source record, but no documented subtype convention maps it to a telemetry family."
+  }
+]

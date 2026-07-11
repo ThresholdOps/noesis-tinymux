@@ -1,0 +1,210 @@
+[
+  {
+    "case_id": "tinymux-to-noesis-v0-unsupported-source-schema-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v9",
+      "event_id": "source-fixture-rejected-schema-0001",
+      "timestamp": "2026-07-10T12:01:00Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This source version is unsupported.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 10
+    },
+    "expected_telemetry": null,
+    "expected_reason": "unsupported_source_schema",
+    "notes": "Mapping must fail closed on unsupported source contract versions."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-invalid-source-record-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-rejected-invalid-0001",
+      "timestamp": "2026-07-10T12:01:05Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": 100,
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This record has a numeric room dbref.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 11
+    },
+    "expected_telemetry": null,
+    "expected_reason": "invalid_source_record",
+    "notes": "Representative source-contract failure; mapping admission does not duplicate every source validator case."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-unsupported-mapping-version-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-rejected-mapping-version-0001",
+      "timestamp": "2026-07-10T12:01:10Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This mapping version is unsupported.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": 12,
+      "mapping_version": "tinymux-to-noesis.v9"
+    },
+    "expected_telemetry": null,
+    "expected_reason": "unsupported_mapping_version",
+    "notes": "Unsupported mapping version is represented as adapter context, not by changing the source contract."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-missing-mapping-context-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-rejected-missing-context-0001",
+      "timestamp": "2026-07-10T12:01:15Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This record lacks adapter mapping context.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {},
+    "expected_telemetry": null,
+    "expected_reason": "missing_mapping_context",
+    "notes": "A valid source record still needs adapter-owned run_id and seq to produce telemetry."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-invalid-run-id-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-rejected-run-id-0001",
+      "timestamp": "2026-07-10T12:01:20Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This record has an empty run identifier.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {
+      "run_id": "",
+      "seq": 13
+    },
+    "expected_telemetry": null,
+    "expected_reason": "invalid_run_id",
+    "notes": "run_id is adapter-owned and must be non-empty."
+  },
+  {
+    "case_id": "tinymux-to-noesis-v0-invalid-seq-rejected",
+    "outcome": "REJECTED",
+    "source_record": {
+      "schema_version": "tinymux.log_event.v0",
+      "event_id": "source-fixture-rejected-seq-0001",
+      "timestamp": "2026-07-10T12:01:25Z",
+      "source": "tinymux",
+      "world": "fixture-world",
+      "room": {
+        "dbref": "#100",
+        "name": "Fixture Room"
+      },
+      "actor": {
+        "dbref": "#200",
+        "name": "Fixture Actor"
+      },
+      "event_type": "say",
+      "text": "This record has an invalid sequence value.",
+      "visibility": {
+        "scope": "room",
+        "audience": [
+          "#100"
+        ],
+        "realm": null
+      }
+    },
+    "mapping_context": {
+      "run_id": "fixture-run-0001",
+      "seq": -1
+    },
+    "expected_telemetry": null,
+    "expected_reason": "invalid_seq",
+    "notes": "seq is adapter-owned and must be a positive integer."
+  }
+]
