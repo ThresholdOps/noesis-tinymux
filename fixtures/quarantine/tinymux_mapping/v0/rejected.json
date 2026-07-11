@@ -1,0 +1,313 @@
+[
+  {
+    "case_id": "quarantine-rejected-unsupported-source-schema-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-unsupported-source-schema-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-unsupported-source-schema-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "source_contract",
+      "reason_code": "unsupported_source_schema",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v9",
+        "event_id": "source-fixture-rejected-schema-0001",
+        "timestamp": "2026-07-10T12:01:00Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This source version is unsupported.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-schema-0001",
+      "source_schema_version": "tinymux.log_event.v9",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 10
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:00.100Z",
+      "diagnostic_details": "Mapping must fail closed on unsupported source contract versions.",
+      "content_hash": null
+    },
+    "notes": "Derived from the unsupported source schema rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-invalid-source-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-invalid-source-record-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-invalid-source-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "source_contract",
+      "reason_code": "invalid_source_record",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-rejected-invalid-0001",
+        "timestamp": "2026-07-10T12:01:05Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": 100,
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This record has a numeric room dbref.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-invalid-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 11
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:05.100Z",
+      "diagnostic_details": "Representative source-contract failure; mapping admission does not duplicate every source validator case.",
+      "content_hash": null
+    },
+    "notes": "Derived from the invalid source record rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-unsupported-mapping-version-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-unsupported-mapping-version-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-unsupported-mapping-version-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "mapping_context",
+      "reason_code": "unsupported_mapping_version",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-rejected-mapping-version-0001",
+        "timestamp": "2026-07-10T12:01:10Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This mapping version is unsupported.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-mapping-version-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 12,
+        "mapping_version": "tinymux-to-noesis.v9"
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:10.100Z",
+      "diagnostic_details": "Unsupported mapping version is represented as adapter context, not by changing the source contract.",
+      "content_hash": null
+    },
+    "notes": "Derived from the unsupported mapping version rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-missing-mapping-context-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-missing-mapping-context-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-missing-mapping-context-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "mapping_context",
+      "reason_code": "missing_mapping_context",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-rejected-missing-context-0001",
+        "timestamp": "2026-07-10T12:01:15Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This record lacks adapter mapping context.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-missing-context-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {},
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:15.100Z",
+      "diagnostic_details": "A valid source record still needs adapter-owned run_id and seq to produce telemetry.",
+      "content_hash": null
+    },
+    "notes": "Derived from the missing mapping context rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-invalid-run-id-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-invalid-run-id-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-invalid-run-id-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "mapping_context",
+      "reason_code": "invalid_run_id",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-rejected-run-id-0001",
+        "timestamp": "2026-07-10T12:01:20Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This record has an empty run identifier.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-run-id-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "",
+        "seq": 13
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:20.100Z",
+      "diagnostic_details": "run_id is adapter-owned and must be non-empty.",
+      "content_hash": null
+    },
+    "notes": "Derived from the invalid run_id rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-invalid-seq-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-invalid-seq-rejected",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-invalid-seq-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "mapping_context",
+      "reason_code": "invalid_seq",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-rejected-seq-0001",
+        "timestamp": "2026-07-10T12:01:25Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This record has an invalid sequence value.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-rejected-seq-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": -1
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:25.100Z",
+      "diagnostic_details": "seq is adapter-owned and must be a positive integer.",
+      "content_hash": null
+    },
+    "notes": "Derived from the invalid seq rejected mapping fixture."
+  },
+  {
+    "case_id": "quarantine-rejected-raw-input-0001",
+    "origin_mapping_case_id": null,
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-rejected-raw-input-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "REJECTED",
+      "rejection_category": "source_contract",
+      "reason_code": "invalid_source_record",
+      "source_record": null,
+      "source_record_raw": "{\"schema_version\":\"tinymux.log_event.v0\",\"event_id\":\"source-fixture-malformed-0001\",\"text\":\"unterminated synthetic input\"",
+      "source_event_id": null,
+      "source_schema_version": null,
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 17
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:01:25.100Z",
+      "diagnostic_details": "Synthetic source input could not be parsed as one complete JSON object.",
+      "content_hash": null
+    },
+    "notes": "Illustrative policy coverage for unparseable input; not derived from the current mapping fixture corpus."
+  }
+]

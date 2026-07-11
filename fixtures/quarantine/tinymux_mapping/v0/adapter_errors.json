@@ -1,0 +1,56 @@
+[
+  {
+    "case_id": "quarantine-adapter-error-0001",
+    "origin_mapping_case_id": null,
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-adapter-error-0001",
+      "quarantine_class": "adapter_error",
+      "outcome": null,
+      "rejection_category": null,
+      "reason_code": "adapter_error",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-adapter-error-0001",
+        "timestamp": "2026-07-10T12:02:00Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "say",
+        "text": "This synthetic source record triggers illustrative adapter failure.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "raw": {
+          "verb": "say"
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-adapter-error-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 18
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:02:00.100Z",
+      "diagnostic_details": {
+        "error_type": "AdapterProcessingError",
+        "message": "Synthetic unexpected adapter failure before mapping classification completed."
+      },
+      "content_hash": null
+    },
+    "notes": "Illustrative adapter-internal failure before successful mapping classification; not a NOESIS telemetry event."
+  }
+]

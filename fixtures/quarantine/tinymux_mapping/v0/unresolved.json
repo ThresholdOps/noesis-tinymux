@@ -1,0 +1,210 @@
+[
+  {
+    "case_id": "quarantine-unresolved-page-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-page-unresolved",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-unresolved-page-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "UNRESOLVED",
+      "rejection_category": null,
+      "reason_code": "no_private_communication_event_type",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-page-0001",
+        "timestamp": "2026-07-10T12:00:25Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "target": {
+          "dbref": "#300",
+          "name": "Fixture Target"
+        },
+        "event_type": "page",
+        "text": "This is a synthetic private page.",
+        "visibility": {
+          "scope": "private",
+          "audience": [
+            "#200",
+            "#300"
+          ],
+          "realm": null
+        },
+        "channel": "page",
+        "raw": {
+          "verb": "page",
+          "mapping_status": "unresolved"
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-page-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 6
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:00:25.100Z",
+      "diagnostic_details": "Valid page source record, but telemetry v0 has no PAGE_ATTEMPT or private communication event family.",
+      "content_hash": null
+    },
+    "notes": "Derived from the page unresolved mapping fixture."
+  },
+  {
+    "case_id": "quarantine-unresolved-ooc-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-ooc-unresolved",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-unresolved-ooc-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "UNRESOLVED",
+      "rejection_category": null,
+      "reason_code": "no_ooc_event_type",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-ooc-0001",
+        "timestamp": "2026-07-10T12:00:30Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": {
+          "dbref": "#200",
+          "name": "Fixture Actor"
+        },
+        "event_type": "ooc",
+        "text": "This is synthetic out-of-character text.",
+        "visibility": {
+          "scope": "room",
+          "audience": [
+            "#100"
+          ],
+          "realm": null
+        },
+        "channel": "ooc"
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-ooc-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 7
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:00:30.100Z",
+      "diagnostic_details": "Valid OOC source record, but telemetry v0 has no OOC_ATTEMPT and it must not be silently treated as ROOM_EMIT.",
+      "content_hash": null
+    },
+    "notes": "Derived from the ooc unresolved mapping fixture."
+  },
+  {
+    "case_id": "quarantine-unresolved-system-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-system-unresolved",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-unresolved-system-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "UNRESOLVED",
+      "rejection_category": null,
+      "reason_code": "system_subtype_required",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-system-0001",
+        "timestamp": "2026-07-10T12:00:35Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": null,
+        "event_type": "system",
+        "text": "synthetic relay checkpoint",
+        "visibility": {
+          "scope": "system",
+          "audience": [
+            "fixture-operators"
+          ],
+          "realm": null
+        },
+        "raw": {
+          "kind": "checkpoint",
+          "relay": "FixtureRelay"
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-system-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 8
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:00:35.100Z",
+      "diagnostic_details": "Valid system source record, but no explicit subtype determines ROOM_EMIT, ERROR, or REFUSAL.",
+      "content_hash": null
+    },
+    "notes": "Derived from the system unresolved mapping fixture."
+  },
+  {
+    "case_id": "quarantine-unresolved-custom-0001",
+    "origin_mapping_case_id": "tinymux-to-noesis-v0-custom-unresolved",
+    "quarantine_record": {
+      "schema_version": "tinymux.mapping_quarantine.v0",
+      "quarantine_id": "quarantine-record-unresolved-custom-0001",
+      "quarantine_class": "mapping_outcome",
+      "outcome": "UNRESOLVED",
+      "rejection_category": null,
+      "reason_code": "custom_subtype_required",
+      "source_record": {
+        "schema_version": "tinymux.log_event.v0",
+        "event_id": "source-fixture-custom-0001",
+        "timestamp": "2026-07-10T12:00:40Z",
+        "source": "tinymux",
+        "world": "fixture-world",
+        "room": {
+          "dbref": "#100",
+          "name": "Fixture Room"
+        },
+        "actor": null,
+        "event_type": "custom",
+        "text": "",
+        "visibility": {
+          "scope": "custom",
+          "audience": [
+            "fixture-observer"
+          ],
+          "realm": null
+        },
+        "softcode": {
+          "relay": "FixtureRelay",
+          "rule": "custom.synthetic"
+        },
+        "raw": {
+          "subtype": "fixture.custom.synthetic"
+        }
+      },
+      "source_record_raw": null,
+      "source_event_id": "source-fixture-custom-0001",
+      "source_schema_version": "tinymux.log_event.v0",
+      "mapping_context": {
+        "run_id": "fixture-run-0001",
+        "seq": 9
+      },
+      "mapping_contract_version": "tinymux-to-noesis-telemetry-mapping-v0",
+      "adapter_processing_timestamp": "2026-07-10T12:00:40.100Z",
+      "diagnostic_details": "Valid custom source record, but no documented subtype convention maps it to a telemetry family.",
+      "content_hash": null
+    },
+    "notes": "Derived from the custom unresolved mapping fixture."
+  }
+]
