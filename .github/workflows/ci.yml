@@ -40,3 +40,6 @@ jobs:
           set -o pipefail
           python3 tests/test_tinymux_to_noesis_mapping_fixtures.py | tee mapping_output.txt
           grep -q "NOESIS conformance check: Level 2 OK" mapping_output.txt
+
+      - name: Validate TinyMUX mapping quarantine fixtures
+        run: python3 tests/test_tinymux_mapping_quarantine_fixtures.py
