@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  fixture-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout noesis-tinymux
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Read pinned NOESIS reference
+        id: pin
+        run: |
+          python3 -c "import json; print('ref=' + json.load(open('compatibility/noesis-telemetry-v0.json'))['ref'])" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout pinned NOESIS reference
+        uses: actions/checkout@v4
+        with:
+          repository: ThresholdOps/noesis
+          ref: ${{ steps.pin.outputs.ref }}
+          path: .noesis-pinned
+
+      - name: Validate TinyMUX source record fixtures
+        run: python3 tests/test_tinymux_source_record_fixtures.py
+
+      - name: Validate TinyMUX to NOESIS telemetry mapping fixtures
+        env:
+          NOESIS_CHECKOUT_PATH: ${{ github.workspace }}/.noesis-pinned
+        run: |
+          set -o pipefail
+          python3 tests/test_tinymux_to_noesis_mapping_fixtures.py | tee mapping_output.txt
+          grep -q "NOESIS conformance check: Level 2 OK" mapping_output.txt
